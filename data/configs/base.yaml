@@ -1,26 +1,26 @@
 # Main data paths for input and output
-data_path: /workspace/3d-object-reconstruction/data/samples/retail_item/  # Path to input data folder containing images and masks
-workdir: /workspace/3d-object-reconstruction/data/output/retail_item/     # Path to output directory for reconstruction results                                                        
+data_path: /workspace/3d-object-reconstruction/data/samples/bottle/  # Path to input data folder containing images and masks
+workdir: /workspace/3d-object-reconstruction/data/output/bottle/     # Path to output directory for reconstruction results                                                        
 downscale: 1.0                                                         # not used for now since we specify image downscale for each part.
 # Camera intrinsic parameters in 3x3 matrix format
 camera_config:
   step: 4                                                             
-  intrinsic:                                                         # Camera(Qoocam) intrinsic matrix, change depending on your camera - check camera's config
-  - 3079.6  # fx
+  intrinsic:                                                         # Camera(RealSense) intrinsic matrix
+  - 388.5970  # fx
   - 0       
-  - 2000.0  # cx
+  - 325.1479  # cx
   - 0       
-  - 3075.1  # fy
-  - 1500.01 # cy
+  - 388.5970  # fy
+  - 240.6325  # cy
   - 0       
   - 0       
   - 1       
 
 # BundleTrack configuration for camera pose estimation and tracking
 bundletrack:
-  debug_dir: /workspace/3d-object-reconstruction/data/output/retail_item/ # Directory for debug outputs
+  debug_dir: /workspace/3d-object-reconstruction/data/output/bottle/ # Directory for debug outputs
   SPDLOG: 1                                                            # Logging level
-  USE_GRAY: false                                                      
+  USE_GRAY: False                                                     
   port: '5555'                                                         
   nerf_port: '9999'                                                    
   downscale: 1.0                                                       # Image downscale factor for tracking
@@ -160,17 +160,17 @@ foundation_stereo:
   hiera: 0                                                       
   z_far: 10                                                      
   remove_invisible: true                                         
-  intrinsic:                                                    # Default camera(Qoocam) intrinsic matrix, changes depending on cameras - check camera's config
-  - 3079.6
+  intrinsic:                                                    # Default camera(RealSense) intrinsic matrix
+  - 388.5970
   - 0
-  - 2000.0
+  - 325.1479
   - 0
-  - 3075.1
-  - 1500.01
+  - 388.5970
+  - 240.6325
   - 0
   - 0
   - 1
-  baseline: 0.0657696127                                        # Stereo baseline(Qoocam), changes depending on cameras
+  baseline: 0.04982                                             # Stereo baseline(RealSense)
 
 # SAM2 parameters for segmentation
 sam2:
@@ -298,6 +298,6 @@ roma:
 
 # Base path configuration
 base_path:
-  base_folder: /workspace/3d-object-reconstruction/data/samples/retail_item/               # Base data folder
-  image_folder: /workspace/3d-object-reconstruction/data/samples/retail_item/left/         # Input image folder
-  save_dir: /workspace/3d-object-reconstruction/data/output/retail_item/                   # Output directory
+  base_folder: /workspace/3d-object-reconstruction/data/samples/bottle/               # Base data folder
+  image_folder: /workspace/3d-object-reconstruction/data/samples/bottle/left/         # Input image folder
+  save_dir: /workspace/3d-object-reconstruction/data/output/bottle/                   # Output directory

@@ -235,8 +235,11 @@ class FoundationStereoProcessor:
         self.config = config
 
         # Initialize and setup the stereo network
+        print("Here")
         self.net = FoundationStereoNet(config)
+        print("loaded net")
         self.net.load_weights()
+        print("loaded weights")
 
         if not torch.cuda.is_available():
             raise RuntimeError("CUDA is required but not available")
@@ -252,9 +255,11 @@ class FoundationStereoProcessor:
 
         # Discover and sort left stereo images
         self._discover_images()
+        print("discovered images")
 
         # Extract camera parameters from configuration
         self._setup_camera_params()
+        print("camera ready")
 
     def _discover_images(self) -> None:
         """Discover and sort left stereo images from the input directory."""
@@ -311,12 +316,6 @@ class FoundationStereoProcessor:
                 # Assume numpy arrays passed directly
                 left = left_input
                 right = right_input
-
-            # Handle grayscale images (H, W) -> (H, W, 3)
-            if left.ndim == 2:
-                left = cv2.cvtColor(left, cv2.COLOR_GRAY2RGB)
-            if right.ndim == 2:
-                right = cv2.cvtColor(right, cv2.COLOR_GRAY2RGB)
 
             # Validate image shapes
             if left.shape != right.shape:
@@ -482,10 +481,13 @@ def run_depth_estimation(
 
         # Load additional model configuration
         cfg_model = OmegaConf.load(config['cfg_path'])
+        print("cfg_model loaded successfully")
         args = OmegaConf.merge(OmegaConf.create(config), cfg_model)
+        print("args loaded successfully")
 
         # Initialize and run processor
         processor = FoundationStereoProcessor(args, rgb_path, depth_path)
+        print("processor initialized successfully")
         processor.run()
         
         logger.info("Depth estimation completed successfully")
