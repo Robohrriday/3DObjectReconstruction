@@ -9,3 +9,4 @@ notebooks/.ipynb_checkpoints/
 data/samples/test/
 src/.ipynb_checkpoints/README-checkpoint.md
 src/test.py
+data_capture/
