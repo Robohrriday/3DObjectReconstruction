@@ -95,10 +95,8 @@ def main():
     print(f"Saving images to:\n  - {left_dir}\n  - {right_dir}")
     print("\nINSTRUCTIONS:")
     print("1. Place your object in front of the camera.")
-    print("2. Press 'Enter' to capture a stereo pair.")
-    print("3. Rotate the object slightly.")
-    print("4. Repeat until you have at least 20 pairs.")
-    print("5. Type 'q' and press Enter to quit.")
+    print("2. Images will be captured automatically every 0.2 seconds.")
+    print("3. Press 'Ctrl+C' to stop capturing.")
     print("-" * 60)
 
     count = 0
@@ -108,12 +106,9 @@ def main():
     for _ in range(30):
         pipeline.wait_for_frames()
     
+    print("Starting capture loop...")
     try:
         while True:
-            user_input = input(f"\n[Pair #{count}] Press Enter to capture (or 'q' to quit): ")
-            if user_input.lower() == 'q':
-                break
-            
             # Wait for a coherent pair of frames
             frames = pipeline.wait_for_frames()
             
@@ -140,15 +135,15 @@ def main():
             cv2.imwrite(path_left, ir1_image)
             cv2.imwrite(path_right, ir2_image)
             
-            print(f"  -> Captured!")
-            print(f"     Saved {filename_left} and {filename_right}")
+            print(f"  -> Captured Pair #{count}")
             
             count += 1
             
-            if count < 20:
-                print(f"  Progress: {count}/20 (Need {20 - count} more)")
-            else:
-                print(f"  Progress: {count}/20 (Minimum goal reached!)")
+            # Wait for 0.2 seconds before next capture
+            time.sleep(0.2)
+
+    except KeyboardInterrupt:
+        print("\nCapture stopped by user.")
 
     finally:
         pipeline.stop()
